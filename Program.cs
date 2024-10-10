@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Yum.Components;
 using Yum.Components.Account;
 using Yum.Data;
+using Yum.Repositoy;
+using Yum.Repositoy.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,7 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 builder.Services.AddAuthentication(options =>
     {

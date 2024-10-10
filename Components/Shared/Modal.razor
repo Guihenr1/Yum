@@ -1,0 +1,41 @@
+﻿<div class="modal fade" id="yum-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    <i class="bi bi-exclamation-triangle-fill text-danger"></i> @ModalTitle
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>@ModalBody</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @onclick="() => ConfirmationClicked(false)">Close</button>
+                <button type="button" class="btn btn-@ModalButtonStyle" @onclick="() => ConfirmationClicked(true)">@ModalButton</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback<bool> OnModalConfirmation { get; set; }
+
+    [Parameter]
+    public string ModalTitle { get; set; } = "Modal Confirmation";
+
+    [Parameter]
+    public string ModalBody { get; set; } = "Are you sure?";
+
+    [Parameter]
+    public string ModalButton { get; set; } = "Confirm";
+
+    [Parameter]
+    public string ModalButtonStyle { get; set; } = "success";
+
+    private async Task ConfirmationClicked(bool value)
+    {
+        await OnModalConfirmation.InvokeAsync(value);
+    }
+}
