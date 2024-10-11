@@ -14,7 +14,7 @@ namespace Yum.Repositoy
 
         public async Task<Category> AddAsync(Category category)
         {
-            await _db.Categories.AddAsync(category);
+            await _db.Category.AddAsync(category);
             await _db.SaveChangesAsync();
 
             return category;
@@ -22,10 +22,10 @@ namespace Yum.Repositoy
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var category = await _db.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            var category = await _db.Category.FirstOrDefaultAsync(c => c.Id == id);
             if (category != null)
             {
-                _db.Categories.Remove(category);
+                _db.Category.Remove(category);
                 return (await _db.SaveChangesAsync()) > 0;
             } else
             {
@@ -35,7 +35,7 @@ namespace Yum.Repositoy
 
         public async Task<Category> GetAsync(int id)
         {
-            var category = await _db.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            var category = await _db.Category.FirstOrDefaultAsync(c => c.Id == id);
 
             if (category == null) return new Category();
 
@@ -44,16 +44,16 @@ namespace Yum.Repositoy
 
         public async Task<IEnumerable<Category>> GetAllAsync()
         {
-            return await _db.Categories.ToListAsync();
+            return await _db.Category.ToListAsync();
         }
 
         public async Task<Category> UpdateAsync(Category category)
         {
-            var categoryFromDb = await _db.Categories.FirstOrDefaultAsync(c => c.Id == category.Id);
+            var categoryFromDb = await _db.Category.FirstOrDefaultAsync(c => c.Id == category.Id);
             if (categoryFromDb != null)
             {
                 categoryFromDb.Name = category.Name;
-                _db.Categories.Update(categoryFromDb);
+                _db.Category.Update(categoryFromDb);
                 await _db.SaveChangesAsync();
                 return categoryFromDb;
             }
