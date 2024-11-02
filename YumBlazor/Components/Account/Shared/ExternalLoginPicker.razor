@@ -16,18 +16,30 @@
 }
 else
 {
-    <form class="form-horizontal" action="Account/PerformExternalLogin" method="post">
-        <div>
+    <div class="d-grid gap-2">
+        <form class="form-horizontal" action="Account/PerformExternalLogin" method="post">
             <AntiforgeryToken />
             <input type="hidden" name="ReturnUrl" value="@ReturnUrl" />
-            <p>
+            <div class="d-grid gap-2">
                 @foreach (var provider in externalLogins)
                 {
-                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                    var buttonClass = provider.Name switch
+                    {
+                        "Facebook" => "btn btn-outline-primary",
+                        "Microsoft" => "btn btn-outline-info",
+                        "Google" => "btn btn-outline-danger",
+                        _ => "btn btn-outline-dark"
+                    };
+
+                    <button type="submit" class="@buttonClass"
+                            name="provider" value="@provider.Name"
+                            title="Log in using your @provider.DisplayName account">
+                        Connect <span class="d-none d-sm-inline">with a @provider.DisplayName</span>
+                    </button>
                 }
-            </p>
-        </div>
-    </form>
+            </div>
+        </form>
+    </div>
 }
 
 @code {
